@@ -1,0 +1,21 @@
+name: Push to production
+
+on:
+  workflow_run:
+    workflows: [Push to staging]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+  packages: read
+
+jobs:
+  create-update-prod:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Push Prod
+    runs-on: ARM64
+    steps:
+      - name: Push to prod
+        run: echo "pushing to prod"

@@ -1,0 +1,16 @@
+name: Push to staging
+
+on:
+  workflow_run:
+    workflows: [🏗️ Build]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  create-update-staging:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Push Staging
+    runs-on: ARM64
+    steps:
+      - name: Push staging
+        run: echo "pushing to staging"
