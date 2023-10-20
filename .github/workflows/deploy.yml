@@ -17,7 +17,6 @@ jobs:
         run: exit 1
 
   create-update-prod:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: [create-update-staging]
     concurrency:
       group: prod_environment
