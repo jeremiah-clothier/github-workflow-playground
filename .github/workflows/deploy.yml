@@ -1,0 +1,27 @@
+name: Deploy happy stack
+
+on:
+  workflow_run:
+    workflows: [🏗️ Build]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  create-update-staging:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Deploy rdev-stable and staging environment
+    concurrency: staging_environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push staging
+        run: echo "pushing to staging"
+
+  create-update-prod:
+    needs: [create-update-staging]
+    name: Deploy production environment
+    concurrency: prod_environment
+    environment: prod # NOTE if env isn't defined than we got problems
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push to prod
+        run: echo "pushing to prod"
