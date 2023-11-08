@@ -1,0 +1,14 @@
+name: 🏗️ Build
+on: [push]
+
+jobs:
+  test:
+    name: ⚡ Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: echo "hey"
+
+      - name: Step 2
+        run: echo "hi"
